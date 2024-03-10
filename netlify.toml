@@ -3,10 +3,7 @@
   publish = "client/build"
   base ="/"
 
-[build]
-  command = "npm run build"
-  publish = "api/build"
-  base ="/"
+
 
 [[redirects]]
   from = "/*"
