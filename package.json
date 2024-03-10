@@ -1,0 +1,10 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build:client": "cd client && npm install && npm run build",
+    "build:api": "cd api && npm install && npm run build",
+    "build": "npm run build:client && npm run build:api"
+  },
+  "dependencies": {}
+}
