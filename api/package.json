@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js --ignore client"
+    "start": "nodemon index.js --ignore client",
+    "build": "echo 'Placeholder build script for API'"
   },
   "author": "",
   "license": "ISC",
