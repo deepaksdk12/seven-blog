@@ -3,7 +3,7 @@
   publish = "client/build"
   base ="/"
 
-[[build]]
+[build]
   command = "npm run build"
   publish = "api/build"
   base ="/"
