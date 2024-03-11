@@ -9,18 +9,12 @@ const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const router = express.Router();
 const path = require("path");
-const express = require("express");
 const cors = require("cors");
 
 dotenv.config();
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use(cors());
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -46,8 +40,9 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 
-app.listen("5001", () => {
-  console.log("backend listening on");
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = router;
