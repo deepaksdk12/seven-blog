@@ -6,7 +6,7 @@ import { Context } from "../../context/Context";
 
 const TopBar = () => {
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5001/images/";
+  const PF = "https://seven-blog.onrender.com/images/";
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
@@ -24,7 +24,7 @@ const TopBar = () => {
               HOME
             </Link>
           </li>
-          <li className="topListItem">
+          {/* <li className="topListItem">
             <Link className="link" to="/">
               ABOUT
             </Link>
@@ -33,7 +33,7 @@ const TopBar = () => {
             <Link className="link" to="/">
               CONTACT
             </Link>
-          </li>
+          </li> */}
           <li className="topListItem">
             <Link className="link" to="/write">
               WRITE

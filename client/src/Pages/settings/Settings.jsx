@@ -10,11 +10,21 @@ export default function Settings() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
+  const [isUsernameEmpty, setIsUsernameEmpty] = useState(false);
+  const [isEmailEmpty, setIsEmailEmpty] = useState(false);
+
   const [success, setSuccess] = useState(false);
-  const PF = "http://localhost:5001/images/";
+  const PF = "https://seven-blog.onrender.com/images/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username && !email && !password) {
+      setIsUsernameEmpty(true);
+      setIsEmailEmpty(true);
+      setIsPasswordEmpty(true);
+      return;
+    }
     dispatch({ type: "UPDATE_START" });
     const updatedUser = {
       userId: user._id,
@@ -29,11 +39,14 @@ export default function Settings() {
       data.append("file", file);
       updatedUser.profilePic = filename;
       try {
-        await axios.post("/upload", data);
+        await axios.post("https://seven-blog.onrender.com/api/upload", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.put("/users/" + user._id, updatedUser);
+      const res = await axios.put(
+        "https://seven-blog.onrender.com/api/users/" + user._id,
+        updatedUser
+      );
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
     } catch (err) {
@@ -67,20 +80,38 @@ export default function Settings() {
           <label>Username</label>
           <input
             type="text"
-            value={user.username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder={user.username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setIsUsernameEmpty(false);
+            }}
           />
+          {isUsernameEmpty && <p>Username cannot be empty</p>}
+
           <label>Email</label>
           <input
             type="email"
             placeholder={user.email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setIsEmailEmpty(false);
+            }}
           />
+          {isEmailEmpty && <p>Email cannot be empty</p>}
+
           <label>Password</label>
           <input
+            id="password"
             type="password"
-            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setIsPasswordEmpty(false);
+            }}
           />
+          {/* {email === ""  && <p>Email cannot be empty</p>}
+          {username === "" && <p>Username cannot be empty</p>} */}
+          {isPasswordEmpty && <p>Password cannot be empty</p>}
           <button className="settingsSubmit" type="submit">
             Update
           </button>

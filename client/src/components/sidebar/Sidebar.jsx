@@ -37,10 +37,7 @@ const Sidebar = () => {
         <span className="sidebarTitle">CATEGORIES</span>
         <ul className="sidebarList">
           {cats.map((c) => (
-            <Link
-              to={`https://seven-blog.onrender.com/api/?cat=${c.name}`}
-              className="link"
-            >
+            <Link to={`/?cat=${c.name}`} className="link" key={c.name}>
               <li className="sidebarListItem">{c.name}</li>
             </Link>
           ))}
