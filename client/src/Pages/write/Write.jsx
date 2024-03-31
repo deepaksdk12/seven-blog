@@ -33,7 +33,9 @@ const Write = () => {
       newPost.photo = filename;
       try {
         await axios.post("https://seven-blog.onrender.com/api/upload", data);
-      } catch (err) {}
+      } catch (err) {
+        console.error("Error occurred during file upload:", err);
+      }
     }
     try {
       const res = await axios.post(

@@ -44,7 +44,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.post("/api/upload", upload.single("file"), async (req, res) => {
   try {
     // Read the uploaded file
-    const fileContent = fs.readFileSync(req.file.path);
+    const fileContent = req.file.buffer;
 
     // Upload file to Dropbox
     const response = await dbx.filesUpload({
