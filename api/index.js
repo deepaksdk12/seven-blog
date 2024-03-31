@@ -10,6 +10,7 @@ const multer = require("multer");
 const router = express.Router();
 const path = require("path");
 const cors = require("cors");
+const { Dropbox } = require("dropbox");
 
 dotenv.config();
 app.use(express.json());
@@ -21,7 +22,11 @@ mongoose
   .then(console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
 
-const storage = multer.diskStorage({
+const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+/*const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
   },
@@ -33,6 +38,29 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
+});
+*/
+
+app.post("/api/upload", upload.single("file"), async (req, res) => {
+  try {
+    // Read the uploaded file
+    const fileContent = fs.readFileSync(req.file.path);
+
+    // Upload file to Dropbox
+    const response = await dbx.filesUpload({
+      path: "/uploads/" + req.file.filename,
+      contents: fileContent,
+    });
+
+    console.log("File uploaded successfully:", response);
+
+    // Respond with success message
+    res.status(200).json("File has been uploaded to Dropbox");
+  } catch (error) {
+    console.error("Error uploading file to Dropbox:", error);
+    // Respond with error message
+    res.status(500).json("Error uploading file to Dropbox");
+  }
 });
 
 app.use("/api/auth", authRoute);
