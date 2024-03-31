@@ -6,15 +6,24 @@ import { Context } from "../../context/Context";
 const Write = () => {
   const titleRef = useRef("");
   const descRef = useRef("");
+  //const [categories, setCategories] = useState("");
+  const categoryRef = useRef([]);
+  const categoryArrayRef = useRef([]);
   const [file, setFile] = useState(null);
   const { user } = useContext(Context);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const categoriesArray = categoryRef.current.value
+      .trim()
+      .split(",")
+      .map((category) => category.trim());
+    categoryArrayRef.current = categoriesArray;
     const newPost = {
       username: user.username,
       title: titleRef.current.value,
       desc: descRef.current.value,
+      categories: categoryArrayRef.current,
     };
     if (file) {
       const data = new FormData();
@@ -27,9 +36,14 @@ const Write = () => {
       } catch (err) {}
     }
     try {
-      const res = await axios.post("/posts", newPost);
+      const res = await axios.post(
+        "https://seven-blog.onrender.com/api/posts",
+        newPost
+      );
       window.location.replace("/post/" + res.data._id);
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error occurred during post:", err);
+    }
   };
   return (
     <div className="write">
@@ -53,6 +67,14 @@ const Write = () => {
             className="writeInput"
             autoFocus={true}
             ref={titleRef}
+          />
+        </div>
+        <div className="writeFormGroup">
+          <input
+            type="text"
+            placeholder="Category (separate multiple categories by comma)"
+            className="writeInput"
+            ref={categoryRef}
           />
         </div>
         <div className="writeFormGroup">
