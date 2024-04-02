@@ -4,8 +4,6 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
-import { storage } from "../../firebase";
-import { getDownloadURL, ref } from "firebase/storage";
 
 export default function SinglePost() {
   const location = useLocation();

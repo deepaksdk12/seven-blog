@@ -1,9 +1,6 @@
 import React from "react";
 import "./post.css";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { storage } from "../../firebase";
-const { ref, uploadBytes } = require("firebase/storage");
 
 const Post = ({ post, id }) => {
   return (
