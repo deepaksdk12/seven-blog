@@ -28,11 +28,23 @@ const Write = () => {
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
-      data.append("name", filename);
       data.append("file", file);
+      data.append("name", filename);
       newPost.photo = filename;
       try {
-        await axios.post("https://seven-blog.onrender.com/api/upload", data);
+        const response = await axios.post(
+          "https://seven-blog.onrender.com/api/upload",
+          data,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        const downloadURL = response.data.downloadURL;
+
+        // Update newPost.photo with the download URL
+        newPost.photo = downloadURL;
       } catch (err) {
         console.error("Error occurred during file upload:", err);
       }

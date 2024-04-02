@@ -4,12 +4,15 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
+import { storage } from "../../firebase";
+import { getDownloadURL, ref } from "firebase/storage";
 
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
-  const PF = "https://seven-blog.onrender.com/images/";
+  // const PF = "https://seven-blog.onrender.com/api/getImage/";
+  const [imageUrl, setImageUrl] = useState(""); // State to store image URL
   const { user } = useContext(Context);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -23,9 +26,40 @@ export default function SinglePost() {
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
+      // if (res.data.photo && res.data.photo.trim() !== "") {
+      //   // Fetch image URL only if photo exists
+      //   try {
+      //     console.log(storage);
+      //     console.log(ref);
+      //     const imagePath = `/${res.data.photo}`;
+      //     console.log("Image path:", imagePath);
+      //     const imgRef = ref(storage, imagePath);
+      //     const imgUrl = await getDownloadURL(imgRef);
+      //     setImageUrl(imgUrl); // Store the fetched image URL
+      //   } catch (error) {
+      //     console.error("Error fetching image:", error);
+      //   }
+      // }
     };
     getPost();
   }, [path]);
+
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     if (post.photo) {
+  //       try {
+  //         const imgResponse = await axios.get(
+  //           `http://localhost:5001/api/image/${post.photo}`
+  //         );
+  //         setImageUrl(imgResponse.data.imageUrl); // Store the fetched image URL
+  //       } catch (error) {
+  //         console.error("Error fetching image:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fetchImage();
+  // }, [post.photo]);
 
   const handleDelete = async () => {
     try {
@@ -36,7 +70,9 @@ export default function SinglePost() {
         }
       );
       window.location.replace("/");
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error deleting post:", err);
+    }
   };
 
   const handleUpdate = async () => {
@@ -47,14 +83,16 @@ export default function SinglePost() {
         desc,
       });
       setUpdateMode(false);
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error updating post:", err);
+    }
   };
 
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
         {post.photo && (
-          <img src={PF + post.photo} alt="" className="singlePostImg" />
+          <img src={post.photo} alt="" className="singlePostImg" />
         )}
         {updateMode ? (
           <input
