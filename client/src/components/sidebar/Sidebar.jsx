@@ -26,10 +26,13 @@ const Sidebar = () => {
           alt=""
         />
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi
-          molestias deleniti ipsa unde rem! Inventore, magnam corrupti? Soluta
-          architecto, a blanditiis sint non facilis enim, ipsum aspernatur neque
-          repellat eum.
+          Welcome to SevenBlog - your hub for insightful content across various
+          topics. Explore engaging posts on technology, lifestyle, travel, food,
+          health & fitness, business & finance, sports, and entertainment. Join
+          our community for thought-provoking articles curated to inform,
+          inspire, and entertain. Dive into our archives, engage with fellow
+          readers, and stay updated with fresh content. Welcome to a world of
+          discovery and enrichment at SevenBlog!
         </p>
       </div>
 

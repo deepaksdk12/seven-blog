@@ -1,30 +1,29 @@
-
-.header{
-    margin-top: 60px;
+.header {
+  margin-top: 60px;
 }
 
-.headerTitles{
-    display: flex;
-    flex-direction: column;
-    color: #444;
-    font-family: 'Lora', serif;
-    align-items: center;
+.headerTitles {
+  display: flex;
+  flex-direction: column;
+  color: #444;
+  font-family: "Lora", serif;
+  align-items: center;
 }
 
-.headerTitleSm{
-    position: absolute;
-    font-size: 20px;
-    top: 18%;
+.headerTitleSm {
+  position: absolute;
+  font-size: 30px;
+  top: 18%;
 }
 
-.headerTitleLg{
-    position: absolute;
-    font-size: 100px;
-    top: 20%;
+.headerTitleLg {
+  position: absolute;
+  font-size: 100px;
+  top: 20%;
 }
-.headerImg{
-    width: 100%;
-    height: 450px;
-    margin-top: 80px;
-    object-fit: cover;
+.headerImg {
+  width: 100%;
+  height: 450px;
+  margin-top: 80px;
+  object-fit: cover;
 }
